@@ -15,6 +15,7 @@ using System.Threading;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.AspNet.SignalR.Client.Hubs;
 using System.Windows.Controls.Primitives;
+using Newtonsoft.Json;
 
 namespace RobotProxy
 {
@@ -66,9 +67,43 @@ namespace RobotProxy
         private void ReceiveWalk(string message)
         {
             // Post back to Status.
+            SetStatus(message);
 
+            string robotReceiverUrl = textBoxRobotReceiverUrl.Text;
+            if (!string.IsNullOrEmpty(robotReceiverUrl))
+            {
+                PostMessageToRobotReceiver(robotReceiverUrl, message);
+            }
+        }
+
+        private void PostMessageToRobotReceiver(string robotReceiverUrl, string message)
+        {
+            RobotControlSignal signal = null;
+            try
+            {
+                // Deserialize message
+                signal = JsonConvert.DeserializeObject(message, typeof(RobotControlSignal)) as RobotControlSignal;
+            }
+            catch (Exception ex)
+            {
+                SetStatus(ex.Message);
+            }
+
+            // Send Message to robotReceiverUrl
+            PostRobotSignalToRobotReceiver(robotReceiverUrl, signal);
+        }
+
+        // Todo: (Joseph) This is the function to post robot receiver.
+        private void PostRobotSignalToRobotReceiver(string robotReceiverUrl, RobotControlSignal signal)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetStatus(string message)
+        {
             this.Dispatcher.Invoke(new Action(() =>
             {
+                SetStatus(message);
                 StringBuilder sb = new StringBuilder();
                 sb.Append(message);
                 sb.AppendLine();

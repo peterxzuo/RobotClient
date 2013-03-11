@@ -6,6 +6,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -18,14 +19,20 @@
             <Label VerticalAlignment="Center" Margin="2">Robot Web Url:</Label>
             <TextBox Name="textBoxUrl"  VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="300">http://localhost</TextBox>
         </StackPanel>
-        
-        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label VerticalAlignment="Center" Margin="2">Robot Receiver Url:</Label>
+            <TextBox Name="textBoxRobotReceiverUrl"  VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Stretch" Width="300">http://localhost</TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Name="startButton" Click="OnStartButtonClick" Margin="5" Width="100">Start</Button>
             <Button Name="stopButton" Click="OnStopButtonClick" Margin="5" Width="100">Stop</Button>
         </StackPanel>
         
-        <StatusBar Name="statusBar" Grid.Row="3">
+        <StatusBar Name="statusBar" Grid.Row="4">
             <TextBlock Name="statusText" VerticalAlignment="Stretch" LineStackingStrategy="MaxHeight"></TextBlock>
         </StatusBar>
+        
+        
     </Grid>
 </Window>
