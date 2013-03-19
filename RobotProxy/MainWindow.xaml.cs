@@ -68,15 +68,10 @@ namespace RobotProxy
         {
             // Post back to Status.
             SetStatus(message);
-
-            string robotReceiverUrl = textBoxRobotReceiverUrl.Text;
-            if (!string.IsNullOrEmpty(robotReceiverUrl))
-            {
-                PostMessageToRobotReceiver(robotReceiverUrl, message);
-            }
+            PostMessageToRobotReceiver(message);
         }
 
-        private void PostMessageToRobotReceiver(string robotReceiverUrl, string message)
+        private void PostMessageToRobotReceiver(string message)
         {
             RobotControlSignal signal = null;
             try
@@ -90,20 +85,28 @@ namespace RobotProxy
             }
 
             // Send Message to robotReceiverUrl
-            PostRobotSignalToRobotReceiver(robotReceiverUrl, signal);
+            string robotReceiverUrl = null;
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                robotReceiverUrl = textBoxRobotReceiverUrl.Text;
+            }), null);
+
+            if (!string.IsNullOrEmpty(robotReceiverUrl))
+            {
+                PostRobotSignalToRobotReceiver(robotReceiverUrl, signal);
+            }
         }
 
         // Todo: (Joseph) This is the function to post robot receiver.
         private void PostRobotSignalToRobotReceiver(string robotReceiverUrl, RobotControlSignal signal)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void SetStatus(string message)
         {
-            this.Dispatcher.Invoke(new Action(() =>
+            this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                SetStatus(message);
                 StringBuilder sb = new StringBuilder();
                 sb.Append(message);
                 sb.AppendLine();
